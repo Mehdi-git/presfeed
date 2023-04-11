@@ -10,20 +10,40 @@ plugins {
 android {
     namespace 'dev.mehdi.bakhtiari.presfeed'
     compileSdk 33
-
     defaultConfig {
         applicationId "dev.mehdi.bakhtiari.presfeed"
         minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        buildConfigField 'String', 'BASE_URL_NEWS_API', "\"https://newsapi.org/v2/\""
+        buildConfigField 'String', 'API_KEY', "\"13222c44a0d049b991e12e057adeb5ef\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+    }
+
+    flavorDimensions "source"
+    productFlavors {
+        bbc {
+            dimension "source"
+            versionNameSuffix "-bbc"
+            buildConfigField 'String', 'NEWS_SOURCE', "\"bbc-news\""
+        }
+        cnn {
+            dimension "source"
+            versionNameSuffix "-cnn"
+            buildConfigField 'String', 'NEWS_SOURCE', "\"cnn\""
         }
     }
 
@@ -33,7 +53,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
     kapt {
@@ -59,13 +79,16 @@ dependencies {
     def coroutines_version = "1.6.2"
     def retrofit_version = "2.9.0"
     def glide_version = "4.12.0"
+    def moshi_version = "1.14.0"
+    def arrow_version = "1.1.2"
 
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.databinding:databinding-runtime:7.4.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.biometric:biometric:1.2.0-alpha05'
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
@@ -96,34 +119,48 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
     // Retrofit
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
+    // Arrow
+    implementation "io.arrow-kt:arrow-core:$arrow_version"
 
     // Ktx
-    implementation "androidx.core:core-ktx:1.9.0"
+    implementation "androidx.core:core-ktx:1.10.0"
 
-    // Okhttp
+    // Okhttp and Interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.8'
-    implementation 'com.google.code.gson:gson:2.9.0'
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
 
-    // Instrumentation tests
-    androidTestImplementation  "com.google.dagger:hilt-android-testing:$hilt_version"
-    androidTestAnnotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
-    kaptAndroidTest "com.google.dagger:hilt-compiler:$hilt_version"
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
-
-    // Unit tests
-    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
-    testAnnotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
-    kaptTest "com.google.dagger:hilt-compiler:$hilt_version"
+    // JUnit 4
     testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.7.0"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+
+    // Mockito
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+
+    // MockK
+    testImplementation 'io.mockk:mockk:1.12.0'
+
+    // Testing Hilt
+    testAnnotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-compiler:$hilt_version"
+    kaptTest "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // Testing mockk
+    testImplementation "io.mockk:mockk:1.12.0"
 }
