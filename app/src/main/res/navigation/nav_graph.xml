@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/headlines_Fragment">
+
+    <fragment
+        android:name="dev.mehdi.bakhtiari.presfeed.ui.topheadlines.TopHeadlinesFragment"
+        android:id="@+id/headlines_Fragment"
+        tools:layout="@layout/fragment_headlines">
+        <action
+            android:id="@+id/action_headlines_Fragment_to_details_fragment"
+            app:destination="@id/details_fragment" />
+        <argument
+            android:name="article"
+            app:argType="dev.mehdi.bakhtiari.presfeed.data.model.ArticleUiModel" />
+    </fragment>
+
+    <fragment
+        android:name="dev.mehdi.bakhtiari.presfeed.ui.newsdetails.NewsDetailsFragment"
+        android:id="@+id/details_fragment"
+        tools:layout="@layout/fragment_news_details"/>
+
+</navigation>
