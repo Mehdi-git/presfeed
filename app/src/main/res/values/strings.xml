@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Presfeed</string>
+    <string name="headlines_title">Top Headline</string>
+    <string name="top_headlines_title">Top Headlines</string>
+    <string name="news_image">News picture</string>
+    <string name="fingerprint_validation">Fingerprint Validation</string>
+    <string name="fingerprint_description">To access touch the fingerprint sensor</string>
+    <string name="fingerprint_Cancel">Cancel</string>
 </resources>
