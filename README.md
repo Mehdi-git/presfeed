@@ -13,9 +13,13 @@ PresFeed has two pages:
 
 To run the app, you need to clone the repository and open it in Android Studio. Then, you can build and run the app on an emulator or a physical device.
 
-Before building the app, you need to add your own API key for the news service. To do this, create a `apikey.properties` file in the root directory of the project and add the following line, replacing `<your-api-key>` with your actual API key:
+## Adding an API key
 
+To use this app, you will need to obtain an API key and add it to the `local.properties` file in the root directory of the project. Here's how:
 
+1. Open the `local.properties` file.
+2. Add a new line to the file with the following format: `apikey="your_api_key_here"`. Replace `your_api_key_here` with your actual API key.
+3. Save the `local.properties` file.
 
 ## Technologies Used
 
@@ -29,7 +33,8 @@ PresFeed uses the following technologies:
 - [Retrofit](https://square.github.io/retrofit/) for making API calls
 - [Okhttp](https://square.github.io/okhttp/) for handling network requests
 - [Moshi](https://github.com/square/moshi) for JSON parsing
-- Unit testing with [JUnit](https://junit.org/junit4/), [Mockito](https://site.mockito.org/), and [Espresso](https://developer.android.com/training/testing/espresso)
+- [Glide](https://bumptech.github.io/glide) for image loading and image caching 
+- Unit testing with [JUnit](https://junit.org/junit4/), [Mockito](https://site.mockito.org/)
 
 ## Architecture
 

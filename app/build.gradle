@@ -7,6 +7,9 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
+def localProps = new Properties()
+localProps.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     namespace 'dev.mehdi.bakhtiari.presfeed'
     compileSdk 33
@@ -17,7 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'BASE_URL_NEWS_API', "\"https://newsapi.org/v2/\""
-        buildConfigField 'String', 'API_KEY', "\"13222c44a0d049b991e12e057adeb5ef\""
+        buildConfigField("String", "API_KEY", "\"${localProps.getProperty("apikey")}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -85,7 +88,7 @@ dependencies {
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.databinding:databinding-runtime:7.4.2'
+    implementation 'androidx.databinding:databinding-runtime:8.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.biometric:biometric:1.2.0-alpha05'
@@ -145,16 +148,13 @@ dependencies {
 
     // JUnit 4
     testImplementation 'junit:junit:4.13.2'
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2"
     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.7.0"
     testImplementation "androidx.arch.core:core-testing:2.2.0"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
     // Mockito
     testImplementation 'org.mockito:mockito-core:3.12.4'
-
-    // MockK
-    testImplementation 'io.mockk:mockk:1.12.0'
 
     // Testing Hilt
     testAnnotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
