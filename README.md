@@ -15,7 +15,7 @@ To run the app, you need to clone the repository and open it in Android Studio. 
 
 ## Adding an API key
 
-To use this app, you will need to obtain an API key and add it to the `local.properties` file in the root directory of the project. Here's how:
+To use this app, you will need to obtain an API key from [newsApi](https://newsapi.org) website and add it to the `local.properties` file in the root directory of the project. Here's how:
 
 1. Open the `local.properties` file.
 2. Add a new line to the file with the following format: `apikey="your_api_key_here"`. Replace `your_api_key_here` with your actual API key.
